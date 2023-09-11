@@ -1,0 +1,9 @@
+git config --global user.name janinatex
+git config --global user.email janainajapa05@gmail.com
+git clone
+
+dotnet new sln --name MtecDevs
+
+dotnet new mvc -o MtecDevs -f net6.0
+
+dotnet sln add MtecDevs\MtecDevs.csproj
