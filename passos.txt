@@ -7,3 +7,7 @@ dotnet new sln --name MtecDevs
 dotnet new mvc -o MtecDevs -f net6.0
 
 dotnet sln add MtecDevs\MtecDevs.csproj
+
+git add .
+git commit -m "adicionou os serviços de DbContext e Identify " 
+git push
