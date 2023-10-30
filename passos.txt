@@ -1,13 +1,18 @@
-git config --global user.name janinatex
-git config --global user.email janainajapa05@gmail.com
-git clone
-
 dotnet new sln --name MtecDevs
 
-dotnet new mvc -o MtecDevs -f net6.0
+dotnet new mvc -o MtecDevs -f net6.0 
 
 dotnet sln add MtecDevs\MtecDevs.csproj
 
-git add .
-git commit -m "adicionou os serviços de DbContext e Identify " 
-git push
+Criar a migração
+// Testar se tem a ferramenta migração
+dotnet ef
+
+// Instala no PC
+dotnet tool install --global dotnet-ef
+
+// Comandos para criar e aplicar as migrações
+dotnet ef migrations add criar-banco
+dotnet ef database update
+
+// Criar a classe para popular dados

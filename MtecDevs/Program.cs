@@ -1,28 +1,26 @@
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using MtecDevs.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews(); 
+builder.Services.AddControllersWithViews();
 
-// Obejtos auxiliar de conexão
+// Obejtos auxiliares de conexão
 string conn = builder.Configuration.GetConnectionString("MtecDevs");
 var version = ServerVersion.AutoDetect(conn);
 
-// serviço de conexão  com o banco  de dados - Contexto
-builder.Services.AddDbContext<AppDbContext>(options => 
-options.UseMySql(conn, version)
+
+// Serviço de conexão com o banco de dados - Contexto
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(conn, version)
 );
 
-//serviço de gestão de usuario - Identity
+// Serviço de gestão de usuário - Identity
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-  .AddEntityFrameworkStores<AppDbContext>()
-  .AddDefaultTokenProviders();
-
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
 var app = builder.Build();
 

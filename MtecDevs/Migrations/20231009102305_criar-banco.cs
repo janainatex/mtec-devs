@@ -219,8 +219,7 @@ namespace MtecDevs.Migrations
                     DataNascimento = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Foto = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    TipoDevId = table.Column<byte>(type: "tinyint unsigned", nullable: false),
-                    TipoDev = table.Column<byte>(type: "tinyint unsigned", nullable: false)
+                    TipoDevId = table.Column<byte>(type: "tinyint unsigned", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -231,8 +230,51 @@ namespace MtecDevs.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Usuario_TipoDev_TipoDevId",
+                        column: x => x.TipoDevId,
+                        principalTable: "TipoDev",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "0a6b9c98-8815-45d0-ad20-9f4367d635ab", "821a402a-66b4-406b-b986-72c612baafec", "Usuário", "USUÁRIO" },
+                    { "51abc422-28ff-4ce2-ad13-f4b530676a75", "110f6d00-1c2d-4a19-9444-e63ec50edba6", "Administrador", "ADMINISTRADOR" },
+                    { "7cc72789-90d9-44b3-ac9a-68a7a3487090", "2224dc22-e40a-42a1-96c0-a857d6287496", "Moderador", "MODERADOR" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "07136ba6-2db2-4584-8362-e4deb32ec013", 0, "66069386-d17e-4891-8c3c-b2ca8dc31e9f", "hazieldefato@gamil.com", true, false, null, "HAZIELDEFATO@GMAIL.COM", "HAZIEL&TITO", "AQAAAAEAACcQAAAAEDtRD0HLPkjmNNKDzs5MFjf34T0jUPXBLI4BdY7CXu4v7QoSpJTGEotydxf/7Gv7sA==", "1", true, "4b7e38d2-8d96-4f70-91d2-259cccf590e0", false, "Haziel&Tito" });
+
+            migrationBuilder.InsertData(
+                table: "TipoDev",
+                columns: new[] { "Id", "Nome" },
+                values: new object[,]
+                {
+                    { (byte)1, "FullStack" },
+                    { (byte)2, "FrontEnd" },
+                    { (byte)3, "BackEnd" },
+                    { (byte)4, "Design" },
+                    { (byte)5, "Jogos" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "51abc422-28ff-4ce2-ad13-f4b530676a75", "07136ba6-2db2-4584-8362-e4deb32ec013" });
+
+            migrationBuilder.InsertData(
+                table: "Usuario",
+                columns: new[] { "UserId", "DataNascimento", "Foto", "Nome", "TipoDevId" },
+                values: new object[] { "07136ba6-2db2-4584-8362-e4deb32ec013", new DateTime(1111, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "/img/usuarios/avatar.jpg", "Haziel e Tito", (byte)5 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -270,6 +312,11 @@ namespace MtecDevs.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuario_TipoDevId",
+                table: "Usuario",
+                column: "TipoDevId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -290,9 +337,6 @@ namespace MtecDevs.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "TipoDev");
-
-            migrationBuilder.DropTable(
                 name: "Usuario");
 
             migrationBuilder.DropTable(
@@ -300,6 +344,9 @@ namespace MtecDevs.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "TipoDev");
         }
     }
 }

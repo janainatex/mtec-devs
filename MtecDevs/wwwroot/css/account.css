@@ -9,7 +9,7 @@ form {
     width: 400px !important;
 }
 
-.text-decoration-none:hover{
+.text-decoration-none:hover {
     text-decoration: underline !important;
 }
 
@@ -17,7 +17,7 @@ form {
     display: flex;
     align-items: center;
     color: var(--bs-body-color);
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .separator h6 {
@@ -27,8 +27,10 @@ form {
     margin-bottom: 0.2rem;
 }
 
-.separator .line{
+.separator .line {
     flex: 1;
     height: 1px;
     background-color: var(--bs-body-color);
 }
+
+

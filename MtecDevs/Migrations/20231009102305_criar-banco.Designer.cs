@@ -11,7 +11,7 @@ using MtecDevs.Data;
 namespace MtecDevs.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231009102501_criar-banco")]
+    [Migration("20231009102305_criar-banco")]
     partial class criarbanco
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,29 @@ namespace MtecDevs.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "51abc422-28ff-4ce2-ad13-f4b530676a75",
+                            ConcurrencyStamp = "110f6d00-1c2d-4a19-9444-e63ec50edba6",
+                            Name = "Administrador",
+                            NormalizedName = "ADMINISTRADOR"
+                        },
+                        new
+                        {
+                            Id = "7cc72789-90d9-44b3-ac9a-68a7a3487090",
+                            ConcurrencyStamp = "2224dc22-e40a-42a1-96c0-a857d6287496",
+                            Name = "Moderador",
+                            NormalizedName = "MODERADOR"
+                        },
+                        new
+                        {
+                            Id = "0a6b9c98-8815-45d0-ad20-9f4367d635ab",
+                            ConcurrencyStamp = "821a402a-66b4-406b-b986-72c612baafec",
+                            Name = "Usuário",
+                            NormalizedName = "USUÁRIO"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -132,6 +155,25 @@ namespace MtecDevs.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "07136ba6-2db2-4584-8362-e4deb32ec013",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "66069386-d17e-4891-8c3c-b2ca8dc31e9f",
+                            Email = "hazieldefato@gamil.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "HAZIELDEFATO@GMAIL.COM",
+                            NormalizedUserName = "HAZIEL&TITO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDtRD0HLPkjmNNKDzs5MFjf34T0jUPXBLI4BdY7CXu4v7QoSpJTGEotydxf/7Gv7sA==",
+                            PhoneNumber = "1",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "4b7e38d2-8d96-4f70-91d2-259cccf590e0",
+                            TwoFactorEnabled = false,
+                            UserName = "Haziel&Tito"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -192,6 +234,13 @@ namespace MtecDevs.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "07136ba6-2db2-4584-8362-e4deb32ec013",
+                            RoleId = "51abc422-28ff-4ce2-ad13-f4b530676a75"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -226,6 +275,33 @@ namespace MtecDevs.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TipoDev");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = (byte)1,
+                            Nome = "FullStack"
+                        },
+                        new
+                        {
+                            Id = (byte)2,
+                            Nome = "FrontEnd"
+                        },
+                        new
+                        {
+                            Id = (byte)3,
+                            Nome = "BackEnd"
+                        },
+                        new
+                        {
+                            Id = (byte)4,
+                            Nome = "Design"
+                        },
+                        new
+                        {
+                            Id = (byte)5,
+                            Nome = "Jogos"
+                        });
                 });
 
             modelBuilder.Entity("MtecDevs.Models.Usuario", b =>
@@ -245,15 +321,24 @@ namespace MtecDevs.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("varchar(60)");
 
-                    b.Property<byte>("TipoDev")
-                        .HasColumnType("tinyint unsigned");
-
                     b.Property<byte>("TipoDevId")
                         .HasColumnType("tinyint unsigned");
 
                     b.HasKey("UserId");
 
+                    b.HasIndex("TipoDevId");
+
                     b.ToTable("Usuario");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "07136ba6-2db2-4584-8362-e4deb32ec013",
+                            DataNascimento = new DateTime(1111, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Foto = "/img/usuarios/avatar.jpg",
+                            Nome = "Haziel e Tito",
+                            TipoDevId = (byte)5
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -309,6 +394,12 @@ namespace MtecDevs.Migrations
 
             modelBuilder.Entity("MtecDevs.Models.Usuario", b =>
                 {
+                    b.HasOne("MtecDevs.Models.TipoDev", "TipoDev")
+                        .WithMany()
+                        .HasForeignKey("TipoDevId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "AccountUser")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -316,6 +407,8 @@ namespace MtecDevs.Migrations
                         .IsRequired();
 
                     b.Navigation("AccountUser");
+
+                    b.Navigation("TipoDev");
                 });
 #pragma warning restore 612, 618
         }
