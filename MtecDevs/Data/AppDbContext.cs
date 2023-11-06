@@ -17,5 +17,7 @@ public class AppDbContext : IdentityDbContext
     {
         base.OnModelCreating(builder);
         AppDbSeed appDbSeed = new(builder);
+
+        // FluentAPI
     }
 }

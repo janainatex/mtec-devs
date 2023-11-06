@@ -1,1 +1,1 @@
-# MTEC-Devs
+# mtec-devs

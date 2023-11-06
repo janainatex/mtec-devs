@@ -7,10 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Obejtos auxiliares de conexão
+// Objetos auxiliar de conexão
 string conn = builder.Configuration.GetConnectionString("MtecDevs");
 var version = ServerVersion.AutoDetect(conn);
-
 
 // Serviço de conexão com o banco de dados - Contexto
 builder.Services.AddDbContext<AppDbContext>(options =>

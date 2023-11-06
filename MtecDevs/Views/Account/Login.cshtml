@@ -10,8 +10,8 @@
             <img src="~/img/logo2.png" alt="Logo" width="350">
         </div>
         <input type="hidden" asp-for="UrlRetorno">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        
+        <div asp-validation-summary="ModelOnly" class="text-danger" hidden></div>
+
         <div class="mb-3">
             <label asp-for="Email" class="form-label"></label>
             <input asp-for="Email" class="form-control">
@@ -46,4 +46,17 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"></partial>
+    <script>
+        let mensagemErro = '';
+        $('.validation-summary-errors ul li').each(function () {
+            mensagemErro += $(this).text();
+        });
+        if (mensagemErro != '') {
+            Swal.fire({
+                title: "Acesso Negado",
+                text: mensagemErro,
+                icon: "error"
+            });
+        }
+    </script>
 }

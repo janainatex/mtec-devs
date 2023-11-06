@@ -8,14 +8,14 @@ namespace MtecDevs.Models;
 public class Usuario
 {
     [Key]
-    public string UserId{ get; set; }
+    public string UserId { get; set; }
     [ForeignKey("UserId")]
     public IdentityUser AccountUser { get; set; }
 
     [Required(ErrorMessage = "Informe o Nome")]
     [StringLength(60, ErrorMessage = "O Nome deve possuir no máximo 60 caracteres")]
     public string Nome { get; set; }
-
+    
     [DataType(DataType.Date)]
     [Display(Name = "Data de Nascimento")]
     [Required(ErrorMessage = "Informe a Data de Nascimento")]
